@@ -3,7 +3,8 @@ var router = express.Router();
 var autentication = require("../controllers/autentication")
 
 /* GET home page. */
-router.post('/', autentication.save);
-router.get('/', autentication.getAll);
+router.post('/registrar', autentication.save);
+router.post('/loginUsuario', autentication.loginUsuario);
+router.post('/loginAdmin', autentication.loginAdmin);
 module.exports = router;
 

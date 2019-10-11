@@ -3,13 +3,19 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var jwt = require('jsonwebtoken');
 require('dotenv').config()
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var autenticationsRouter = require('./routes/autentication');
+var adminRouter = require('./routes/admin');
 
 var app = express();
+
+//Definicion de secretKey
+app.set('secretKeyUsuarios', process.env.SECRET_KEY_USUARIOS); 
+app.set('secretKeyAdmin', process.env.SECRET_KEY_ADMIN); 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,8 +28,35 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/users', validateUsuario, usersRouter);
 app.use('/autentication', autenticationsRouter);
+app.use('/admin', validateAdmin, adminRouter);
+
+function validateUsuario(req, res, next) {
+  jwt.verify(req.headers['x-access-token'], req.app.get('secretKeyUsuarios'), function(err, decoded) {
+    if (err) {
+      res.json({status:"error", message: err.message, data:null});
+    }else{
+      // add user id to request
+      req.body.userId = decoded.id;
+      next();
+    }
+  });
+  
+}
+
+function validateAdmin(req, res, next) {
+  jwt.verify(req.headers['x-access-token'], req.app.get('secretKeyAdmin'), function(err, decoded) {
+    if (err) {
+      res.json({status:"error", message: err.message, data:null});
+    }else{
+      // add user id to request
+      req.body.userId = decoded.id;
+      next();
+    }
+  });
+  
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

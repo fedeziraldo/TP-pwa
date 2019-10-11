@@ -26,6 +26,10 @@ var UsuariosSchemna = mongoose.Schema({
     email:{
         type:String,
         required: [true, 'El campo email es obligatorio']
+    },
+    admin: {
+        type: Boolean,
+        default: false
     }
 })
 
