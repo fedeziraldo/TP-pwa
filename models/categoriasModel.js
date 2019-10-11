@@ -1,7 +1,7 @@
 const mongoose = require('../bin/mongodb');
 const Schema = mongoose.Schema;
 
-var UsuariosSchemna = Schema({
+var CategoriasSchemna = Schema({
     nombre:{
         type: String,
         trim: true,
@@ -12,4 +12,4 @@ var UsuariosSchemna = Schema({
     fEliminado: Date
 })
 
-module.exports  =  mongoose.model('categorias',UsuariosSchemna)
+module.exports  =  mongoose.model('categorias',CategoriasSchemna)

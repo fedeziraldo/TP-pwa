@@ -19,7 +19,7 @@ module.exports = {
 
     getById: async function (req, res, next) {
         try {
-            var data = await productModel.findById(req.params.productId);
+            var data = await productModel.findById(req.params.id);
             res.status(200).json({ status: "success", message: "ok", data: data });
         } catch (err) {
             console.log(err);
