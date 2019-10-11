@@ -2,8 +2,14 @@ const mongoose = require('../bin/mongodb');
 const Schema = mongoose.Schema;
 
 var UsuariosSchemna = Schema({
-    nombre:String,
-    apellido:String,
+    nombre: {
+        type: String,
+        trim: true
+    },
+    apellido: {
+        type: String,
+        trim: true
+    },
     password:{
         type: String,
         trim: true,
@@ -14,7 +20,8 @@ var UsuariosSchemna = Schema({
     email:{
         type:String,
         required: [true, 'El campo email es obligatorio'],
-        unique: true
+        unique: true,
+        trim: true
     },
     admin: {
         type: Boolean,
