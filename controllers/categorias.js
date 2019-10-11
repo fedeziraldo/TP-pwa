@@ -6,7 +6,7 @@ module.exports = {
       var data = await categoriasModel.create({ nombre: req.body.nombre, padre: req.body.padre });
       res.json({status: "success", message: "Categoria added successfully!!!", data: data}); 
     }catch(err){
-      console.log(err)
+      console.log(err);
       next(err);
     }
   },
@@ -16,7 +16,7 @@ module.exports = {
       var data = await categoriasModel.find();
       res.json({status: "success", data: data}); 
     }catch(err){
-      console.log(err)
+      console.log(err);
       next(err);
     }
   },
@@ -26,7 +26,7 @@ module.exports = {
       var data = await categoriasModel.findByIdAndUpdate(req.params.id, { $set: {fEliminado: new Date()}});
       res.json({status: "success", data: data}); 
     }catch(err){
-      console.log(err)
+      console.log(err);
       next(err);
     }
   }

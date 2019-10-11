@@ -7,7 +7,7 @@ module.exports = {
       var data = await autenticationModel.create({ nombre: req.body.nombre, apellido: req.body.apellido, password: req.body.password, email: req.body.email });
       res.json({status: "success", message: "User added successfully!!!", data: data}); 
     }catch(err){
-      console.log(err)
+      console.log(err);
       next(err);
     }
   },
@@ -17,7 +17,7 @@ module.exports = {
       var data = await autenticationModel.find();
       res.json({status: "success", data: data}); 
     }catch(err){
-      console.log(err)
+      console.log(err);
       next(err);
     }
   },
@@ -27,7 +27,7 @@ module.exports = {
       var data = await autenticationModel.findById(req.body.userId);
       res.json({status: "success", data: data}); 
     }catch(err){
-      console.log(err)
+      console.log(err);
       next(err);
     }
   },
@@ -47,7 +47,7 @@ module.exports = {
         res.status(400).json({status:"not_found", message: "user not found!!!", data:null});
       }
     }catch(err){
-      console.log(err)
+      console.log(err);
       next(err);
     }
   },
@@ -67,7 +67,7 @@ module.exports = {
         res.status(400).json({status:"not_found", message: "user not found!!!", data:null});
       }
     }catch(err){
-      console.log(err)
+      console.log(err);
       next(err);
     }
   },
@@ -77,7 +77,7 @@ module.exports = {
       var data = await autenticationModel.findByIdAndUpdate(req.params.id, { $set: {activo: true}});
       res.json({status: "success", data: data}); 
     }catch(err){
-      console.log(err)
+      console.log(err);
       next(err);
     }
   },
@@ -87,7 +87,7 @@ module.exports = {
       var data = await autenticationModel.findByIdAndUpdate(req.params.id, { $set: {fEliminado: new Date()}});
       res.json({status: "success", data: data}); 
     }catch(err){
-      console.log(err)
+      console.log(err);
       next(err);
     }
   }
