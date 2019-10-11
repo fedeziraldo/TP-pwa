@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var autentication = require("../controllers/autentication")
+var autentication = require("../controllers/autentication");
 
 /* GET home page. */
 router.post('/registrar', autentication.save);

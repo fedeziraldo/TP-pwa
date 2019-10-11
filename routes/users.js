@@ -1,9 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var autentication = require("../controllers/autentication");
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+router.get('/', autentication.getThisUser);
 
 module.exports = router;

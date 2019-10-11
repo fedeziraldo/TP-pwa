@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 module.exports = {
   save: async function(req, res, next) {
     try{
-      var data = await autenticationModel.create({ name: req.body.name, usuario: req.body.usuario, password: req.body.password, phone: req.body.phone, email: req.body.email });
+      var data = await autenticationModel.create({ nombre: req.body.nombre, apellido: req.body.apellido, password: req.body.password, email: req.body.email });
       res.json({status: "success", message: "User added successfully!!!", data: data}); 
     }catch(err){
       console.log(err)
@@ -22,9 +22,19 @@ module.exports = {
     }
   },
 
+  getThisUser: async function(req, res, next) {
+    try{
+      var data = await autenticationModel.findById(req.body.userId);
+      res.json({status: "success", data: data}); 
+    }catch(err){
+      console.log(err)
+      next(err);
+    }
+  },
+
   loginUsuario: async function(req, res, next) {
     try{
-      var usuario = await autenticationModel.findOne({usuario:req.body.usuario});
+      var usuario = await autenticationModel.findOne({email:req.body.email, activo: true, eliminado: false});
         if (usuario) {
           if(req.body.password == usuario.password) {
             const token = jwt.sign({id: usuario._id}, req.app.get('secretKeyUsuarios'), { expiresIn: '1h' });
@@ -44,7 +54,7 @@ module.exports = {
 
   loginAdmin: async function(req, res, next) {
     try{
-      var usuario = await autenticationModel.findOne({usuario:req.body.usuario, admin: true});
+      var usuario = await autenticationModel.findOne({email:req.body.email, admin: true, activo: true, eliminado: false});
         if (usuario) {
           if(req.body.password == usuario.password) {
             const token = jwt.sign({id: usuario._id}, req.app.get('secretKeyAdmin'), { expiresIn: '1h' });
@@ -56,6 +66,26 @@ module.exports = {
       }else{
         res.status(400).json({status:"not_found", message: "user not found!!!", data:null});
       }
+    }catch(err){
+      console.log(err)
+      next(err);
+    }
+  },
+
+  activar: async function(req, res, next) {
+    try{
+      var data = await autenticationModel.findByIdAndUpdate(req.body.id, { $set: {activo: true}});
+      res.json({status: "success", data: data}); 
+    }catch(err){
+      console.log(err)
+      next(err);
+    }
+  },
+
+  eliminar: async function(req, res, next) {
+    try{
+      var data = await autenticationModel.findByIdAndUpdate(req.body.id, { $set: {eliminado: true}});
+      res.json({status: "success", data: data}); 
     }catch(err){
       console.log(err)
       next(err);
