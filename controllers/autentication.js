@@ -34,7 +34,7 @@ module.exports = {
 
   loginUsuario: async function(req, res, next) {
     try{
-      var usuario = await autenticationModel.findOne({email:req.body.email, activo: true, eliminado: false});
+      var usuario = await autenticationModel.findOne({email:req.body.email, activo: true, fEliminado: null});
         if (usuario) {
           if(req.body.password == usuario.password) {
             const token = jwt.sign({id: usuario._id}, req.app.get('secretKeyUsuarios'), { expiresIn: '1h' });
@@ -54,7 +54,7 @@ module.exports = {
 
   loginAdmin: async function(req, res, next) {
     try{
-      var usuario = await autenticationModel.findOne({email:req.body.email, admin: true, activo: true, eliminado: false});
+      var usuario = await autenticationModel.findOne({email:req.body.email, admin: true, activo: true, fEliminado: null});
         if (usuario) {
           if(req.body.password == usuario.password) {
             const token = jwt.sign({id: usuario._id}, req.app.get('secretKeyAdmin'), { expiresIn: '1h' });
@@ -74,7 +74,7 @@ module.exports = {
 
   activar: async function(req, res, next) {
     try{
-      var data = await autenticationModel.findByIdAndUpdate(req.body.id, { $set: {activo: true}});
+      var data = await autenticationModel.findByIdAndUpdate(req.params.id, { $set: {activo: true}});
       res.json({status: "success", data: data}); 
     }catch(err){
       console.log(err)
@@ -84,7 +84,7 @@ module.exports = {
 
   eliminar: async function(req, res, next) {
     try{
-      var data = await autenticationModel.findByIdAndUpdate(req.body.id, { $set: {eliminado: true}});
+      var data = await autenticationModel.findByIdAndUpdate(req.params.id, { $set: {fEliminado: new Date()}});
       res.json({status: "success", data: data}); 
     }catch(err){
       console.log(err)

@@ -1,5 +1,7 @@
 const mongoose = require('../bin/mongodb');
-var UsuariosSchemna = mongoose.Schema({
+const Schema = mongoose.Schema;
+
+var UsuariosSchemna = Schema({
     nombre:String,
     apellido:String,
     password:{
@@ -18,10 +20,7 @@ var UsuariosSchemna = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    eliminado: {
-        type: Boolean,
-        default: false
-    },
+    fEliminado: Date,
     activo: {
         type: Boolean,
         default: false
