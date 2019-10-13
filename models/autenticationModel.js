@@ -1,5 +1,6 @@
 const mongoose = require('../bin/mongodb');
 const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt'); 
 
 var UsuariosSchemna = Schema({
     nombre: {
@@ -33,5 +34,10 @@ var UsuariosSchemna = Schema({
         default: false
     }
 })
+
+UsuariosSchemna.pre('save', function(next){
+    this.password = bcrypt.hashSync(this.password, 10);
+    next();
+});
 
 module.exports  =  mongoose.model('users',UsuariosSchemna)

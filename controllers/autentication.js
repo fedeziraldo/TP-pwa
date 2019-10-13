@@ -1,5 +1,6 @@
 const autenticationModel = require("../models/autenticationModel");
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt'); 
 
 module.exports = {
   save: async function(req, res, next) {
@@ -36,7 +37,7 @@ module.exports = {
     try{
       var usuario = await autenticationModel.findOne({email:req.body.email, activo: true, fEliminado: null});
         if (usuario) {
-          if(req.body.password == usuario.password) {
+          if(bcrypt.compareSync(req.body.password, usuario.password)) {
             const token = jwt.sign({id: usuario._id}, req.app.get('secretKeyUsuarios'), { expiresIn: '1h' });
             console.log(token,usuario)
             res.status(200).json({status:"success", message: "user found!!!", data:{user: usuario, token:token}});
@@ -56,7 +57,7 @@ module.exports = {
     try{
       var usuario = await autenticationModel.findOne({email:req.body.email, admin: true, activo: true, fEliminado: null});
         if (usuario) {
-          if(req.body.password == usuario.password) {
+          if(bcrypt.compareSync(req.body.password, usuario.password)) {
             const token = jwt.sign({id: usuario._id}, req.app.get('secretKeyAdmin'), { expiresIn: '1h' });
             console.log(token,usuario)
             res.status(200).json({status:"success", message: "user found!!!", data:{user: usuario, token:token}});
