@@ -12,4 +12,6 @@ var CategoriasSchemna = Schema({
     fEliminado: Date
 })
 
+CategoriasSchemna.plugin(mongoose.mongoosePaginate);
+
 module.exports  =  mongoose.model('categorias',CategoriasSchemna)

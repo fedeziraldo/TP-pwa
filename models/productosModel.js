@@ -34,6 +34,8 @@ const ProductoSchema = Schema({
     fEliminado: Date
 });
 
+ProductoSchema.plugin(mongoose.mongoosePaginate);
+
 module.exports = {
     schema: ProductoSchema,
     model: mongoose.model('productos', ProductoSchema)

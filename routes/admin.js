@@ -7,7 +7,7 @@ var compras = require("../controllers/compras")
 
 router.get('/users', autentication.getAll);
 router.delete('/users/:id', autentication.eliminar);
-router.put('/users/:id', autentication.activar);
+router.post('/users/', autentication.saveAdmin);
 
 router.get('/categorias', categorias.getAll);
 router.post('/categorias', categorias.save);

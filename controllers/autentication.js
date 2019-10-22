@@ -2,11 +2,30 @@ const autenticationModel = require("../models/autenticationModel");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt'); 
 
+autenticationModel.create({ nombre: "super", apellido: "usuario", password: "root", email: "root", admin: true }, function(err) {
+  if (err) {
+    console.log(err);
+    return;
+  }
+  console.log("Root added successfully!!!"); 
+});
+
+
 module.exports = {
-  save: async function(req, res, next) {
+  saveUsuario: async function(req, res, next) {
     try{
       var data = await autenticationModel.create({ nombre: req.body.nombre, apellido: req.body.apellido, password: req.body.password, email: req.body.email });
       res.json({status: "success", message: "User added successfully!!!", data: data}); 
+    }catch(err){
+      console.log(err);
+      next(err);
+    }
+  },
+
+  saveAdmin: async function(req, res, next) {
+    try{
+      var data = await autenticationModel.create({ nombre: req.body.nombre, apellido: req.body.apellido, password: req.body.password, email: req.body.email, admin: true });
+      res.json({status: "success", message: "Admin added successfully!!!", data: data}); 
     }catch(err){
       console.log(err);
       next(err);

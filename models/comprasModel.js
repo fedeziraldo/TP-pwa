@@ -16,4 +16,6 @@ var ComprasSchema = Schema({
     }
 })
 
+ComprasSchema.plugin(mongoose.mongoosePaginate);
+
 module.exports  =  mongoose.model('compras',ComprasSchema)
