@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 const productoSchema = require("./productosModel").schema;
 
-var ComprasSchema = Schema({
+const ComprasSchema = Schema({
     producto: productoSchema,
-    usuario: {type:Schema.ObjectId, ref:"users"},
+    usuario: { type: Schema.ObjectId, ref: "users" },
     fecha: {
         type: Date,
         required: true
@@ -18,4 +18,4 @@ var ComprasSchema = Schema({
 
 ComprasSchema.plugin(mongoose.mongoosePaginate);
 
-module.exports  =  mongoose.model('compras',ComprasSchema)
+module.exports = mongoose.model('compras', ComprasSchema)

@@ -15,8 +15,8 @@ var productosRouter = require('./routes/productos');
 var app = express();
 
 //Definicion de secretKey
-app.set('secretKeyUsuarios', process.env.SECRET_KEY_USUARIOS); 
-app.set('secretKeyAdmin', process.env.SECRET_KEY_ADMIN); 
+app.set('secretKeyUsuarios', process.env.SECRET_KEY_USUARIOS);
+app.set('secretKeyAdmin', process.env.SECRET_KEY_ADMIN);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
@@ -42,38 +42,38 @@ app.use('/admin', validateAdmin, adminRouter);
 app.use('/productos', productosRouter);
 
 function validateUsuario(req, res, next) {
-  jwt.verify(req.headers['x-access-token'], req.app.get('secretKeyUsuarios'), function(err, decoded) {
+  jwt.verify(req.headers['x-access-token'], req.app.get('secretKeyUsuarios'), function (err, decoded) {
     if (err) {
-      res.json({status:"error", message: err.message, data:null});
-    }else{
+      res.json({ status: "error", message: err.message, data: null });
+    } else {
       // add user id to request
       req.body.userId = decoded.id;
       next();
     }
   });
-  
+
 }
 
 function validateAdmin(req, res, next) {
-  jwt.verify(req.headers['x-access-token'], req.app.get('secretKeyAdmin'), function(err, decoded) {
+  jwt.verify(req.headers['x-access-token'], req.app.get('secretKeyAdmin'), function (err, decoded) {
     if (err) {
-      res.json({status:"error", message: err.message, data:null});
-    }else{
+      res.json({ status: "error", message: err.message, data: null });
+    } else {
       // add user id to request
       req.body.userId = decoded.id;
       next();
     }
   });
-  
+
 }
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

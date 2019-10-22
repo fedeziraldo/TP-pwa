@@ -19,7 +19,7 @@ module.exports = {
 
     getThisCompras: async function (req, res, next) {
         try {
-            var data = await comprasModel.find({usuario: req.body.userId});
+            var data = await comprasModel.find({ usuario: req.body.userId });
             res.status(200).json({ status: "success", message: "ok", data: data });
         } catch (err) {
             console.log(err);

@@ -1,8 +1,8 @@
 const mongoose = require('../bin/mongodb');
 const Schema = mongoose.Schema;
-const bcrypt = require('bcrypt'); 
+const bcrypt = require('bcrypt');
 
-var UsuariosSchemna = Schema({
+const UsuariosSchemna = Schema({
     nombre: {
         type: String,
         trim: true
@@ -11,15 +11,15 @@ var UsuariosSchemna = Schema({
         type: String,
         trim: true
     },
-    password:{
+    password: {
         type: String,
         trim: true,
-        required: [true,"El password es obligatorio"],
-        minlength: [4,"El password debe tener al menos 4 caracteres"],
-        maxlength: [8,"El password debe tener como máximo 8 caracteres"]
-        },
-    email:{
-        type:String,
+        required: [true, "El password es obligatorio"],
+        minlength: [4, "El password debe tener al menos 4 caracteres"],
+        maxlength: [8, "El password debe tener como máximo 8 caracteres"]
+    },
+    email: {
+        type: String,
         required: [true, 'El campo email es obligatorio'],
         unique: true,
         trim: true
@@ -35,9 +35,9 @@ var UsuariosSchemna = Schema({
     }
 })
 
-UsuariosSchemna.pre('save', function(next){
+UsuariosSchemna.pre('save', function (next) {
     this.password = bcrypt.hashSync(this.password, 10);
     next();
 });
 
-module.exports  =  mongoose.model('users',UsuariosSchemna)
+module.exports = mongoose.model('users', UsuariosSchemna)
