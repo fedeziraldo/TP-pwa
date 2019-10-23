@@ -28,12 +28,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
-  next()
-})
+/** HEADER INICIO */
+app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin','http://localhost:4200');
+  res.setHeader('Access-Control-Allow-Methods','GET,POST,DELETE,PUT');
+  next();
+});
+app.options("/*", function(req, res, next){
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+  res.send(200);
+});
+/** HEADER FIN */
 
 app.use('/', indexRouter);
 app.use('/users', validateUsuario, usersRouter);

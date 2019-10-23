@@ -63,7 +63,7 @@ module.exports = {
           res.status(400).json({ status: "error", message: "Invalid user/password!!!", data: null });
         }
       } else {
-        res.status(400).json({ status: "not_found", message: "user not found!!!", data: null });
+        res.status(500).json({ status: "not_found", message: "user not found!!!", data: null });
       }
     } catch (err) {
       console.log(err);
@@ -83,7 +83,7 @@ module.exports = {
           res.status(400).json({ status: "error", message: "Invalid user/password!!!", data: null });
         }
       } else {
-        res.status(400).json({ status: "not_found", message: "user not found!!!", data: null });
+        res.status(500).json({ status: "not_found", message: "user not found!!!", data: null });
       }
     } catch (err) {
       console.log(err);
