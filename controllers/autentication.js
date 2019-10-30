@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 autenticationModel.create({ nombre: "super", apellido: "usuario", password: "root", email: "root", admin: true, activo: true }, function (err) {
   if (err) {
-    console.log(err);
+    console.log("Ya esta creado root");
     return;
   }
   console.log("Root added successfully!!!");

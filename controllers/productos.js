@@ -33,7 +33,7 @@ module.exports = {
 
     save: async function (req, res, next) {
         try {
-            var product = new productModel({
+            var product = new productosModel({
                 denominacion: req.body.name,
                 sku: req.body.sku,
                 precio: req.body.price,
