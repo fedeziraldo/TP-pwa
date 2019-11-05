@@ -25,7 +25,8 @@ const ProductoSchema = Schema({
     },
     cantidad: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     destacado: {
         type: Boolean,

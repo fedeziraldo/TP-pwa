@@ -34,9 +34,9 @@ module.exports = {
     save: async function (req, res, next) {
         try {
             var product = new productosModel({
-                denominacion: req.body.name,
+                denominacion: req.body.denominacion,
                 sku: req.body.sku,
-                precio: req.body.price,
+                precio: req.body.precio,
                 precioOferta: req.body.precioOferta,
                 categoria: req.body.categoria,
                 descripcion: req.body.descripcion,
