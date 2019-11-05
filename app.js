@@ -51,6 +51,7 @@ app.use('/productos', productosRouter);
 function validateUsuario(req, res, next) {
   jwt.verify(req.headers['x-access-token'], req.app.get('secretKeyUsuarios'), function (err, decoded) {
     if (err) {
+      if(err.name=='TokenExpiredError') res.status(401).json({status:"error", message: err.message, data:null});
       res.json({ status: "error", message: err.message, data: null });
     } else {
       // add user id to request
@@ -58,12 +59,12 @@ function validateUsuario(req, res, next) {
       next();
     }
   });
-
 }
 
 function validateAdmin(req, res, next) {
   jwt.verify(req.headers['x-access-token'], req.app.get('secretKeyAdmin'), function (err, decoded) {
     if (err) {
+      if(err.name=='TokenExpiredError') res.status(401).json({status:"error", message: err.message, data:null});
       res.json({ status: "error", message: err.message, data: null });
     } else {
       // add user id to request
