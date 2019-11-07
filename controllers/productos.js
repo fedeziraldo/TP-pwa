@@ -40,7 +40,7 @@ module.exports = {
                 precioOferta: req.body.precioOferta,
                 categoria: req.body.categoria,
                 descripcion: req.body.descripcion,
-                cantidad: req.body.cantidad,
+                stock: req.body.stock,
                 destacado: req.body.destacado,
             });
             var result = await product.save();

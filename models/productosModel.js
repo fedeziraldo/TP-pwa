@@ -23,10 +23,14 @@ const ProductoSchema = Schema({
         type: String,
         trim: true
     },
-    cantidad: {
+    stock: {
         type: Number,
         required: true,
         default: 0
+    },
+    imagenes: {
+        type: Array,
+        default: []
     },
     destacado: {
         type: Boolean,

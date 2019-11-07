@@ -2,7 +2,7 @@ const autenticationModel = require("../models/autenticationModel");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-autenticationModel.create({ nombre: "super", apellido: "usuario", password: "root", email: "root", admin: true, activo: true }, function (err) {
+autenticationModel.create({ nombre: "root", apellido: "root", password: "root", email: "root", admin: true, activo: true }, function (err) {
   if (err) {
     console.log("Ya esta creado root");
     return;
