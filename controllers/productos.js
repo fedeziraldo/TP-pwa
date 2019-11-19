@@ -3,7 +3,7 @@ const productosModel = require("../models/productosModel").model;
 module.exports = {
     getAll: async function (req, res, next) {
         try {
-            var producto = await productosModel.paginate({}, { limit: 16 });
+            var producto = await productosModel.paginate({}, { populate: 'categoria', limit: 16 });
             res.status(200).json({ status: "success", message: "ok", data: producto });
         } catch (err) {
             console.log(err);
@@ -38,7 +38,7 @@ module.exports = {
                 sku: req.body.sku,
                 precio: req.body.precio,
                 precioOferta: req.body.precioOferta,
-                categoria: req.body.categoria,
+                categoria: req.body.categoria == "" ? null : req.body.categoria,
                 descripcion: req.body.descripcion,
                 stock: req.body.stock,
                 destacado: req.body.destacado,
