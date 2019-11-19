@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const path = require("path")
 
+var productos = require("../controllers/productos");
+
 //require multer for the file uploads
 const multer = require('multer');
 // set the directory for the uploads to the uploaded to
@@ -20,7 +22,7 @@ var storage = multer.diskStorage({
 const upload = multer({storage}).single('photo');
 
 
-router.post('/', function(req, res, next) {
+router.post('/:id', function(req, res, next) {
      upload(req, res, function (err) {
         if (err) {
           // An error occurred when uploading
@@ -29,6 +31,9 @@ router.post('/', function(req, res, next) {
         }  
        // No error occured.
         var path = req.file.path;
+        var prod_id = req.params.id;
+        
+        productos.asociarImagen(prod_id, path);
         return res.send("Upload Completed for "+path); 
   });     
   

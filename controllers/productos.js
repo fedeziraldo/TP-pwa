@@ -60,5 +60,19 @@ module.exports = {
             console.log(err);
             next(err);
         }
-    }
+    },
+
+    asociarImagen: async function (prod_id, path) {
+        try {
+            var data = await productosModel.findById(prod_id);
+
+            data.imagenes.push(path);
+            await data.save();
+
+            return;
+        } catch (err) {
+            console.log(err);
+            next(err);
+        }
+    },
 }
