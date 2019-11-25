@@ -3,7 +3,22 @@ const productosModel = require("../models/productosModel").model;
 module.exports = {
     getAll: async function (req, res, next) {
         try {
-            var producto = await productosModel.paginate({}, { populate: 'categoria', limit: 16 });
+            let query = {};
+            if (req.query.denominacion) query.denominacion = new RegExp(`\\w*${req.query.denominacion}\\w*`);
+            if (req.query.precioMin) query.precio = { $gt: req.query.precioMin };
+            if (req.query.precioMax) query.precio = { $lt: req.query.precioMax };
+            if (req.query.sku) query.sku = new RegExp(`\\w*${req.query.sku}\\w*`);
+
+            let options = {
+                sort: {},
+                populate: 'categoria',
+                limit: 5,
+                page: req.query.page ? req.query.page : 1
+            };
+            if (req.query.sort) options.sort[req.query.sort] = 1;
+            else options.sort["denominacion"] = 1;
+
+            var producto = await productosModel.paginate(query, options);
             res.status(200).json({ status: "success", message: "ok", data: producto });
         } catch (err) {
             console.log(err);
@@ -13,7 +28,7 @@ module.exports = {
 
     getDestacados: async function (req, res, next) {
         try {
-            var producto = await productosModel.paginate({ destacado: true }, { limit: 16 });
+            var producto = await productosModel.paginate({ destacado: true }, { populate: 'categoria', limit: 16 });
             res.status(200).json({ status: "success", message: "ok", data: producto });
         } catch (err) {
             console.log(err);
