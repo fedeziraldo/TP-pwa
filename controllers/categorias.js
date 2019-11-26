@@ -15,6 +15,7 @@ module.exports = {
     try {
       let query = {};
       if (req.query.nombre) query.nombre = new RegExp(`\\w*${req.query.nombre}\\w*`);
+      query.fEliminado = null
 
       let options = {
         sort: {nombre :1},

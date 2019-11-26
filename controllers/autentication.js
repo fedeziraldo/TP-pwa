@@ -33,7 +33,7 @@ module.exports = {
 
   getAll: async function (req, res, next) {
     try {
-      var data = await autenticationModel.find();
+      var data = await autenticationModel.find({fEliminado : null});
       res.json({ status: "success", data: data });
     } catch (err) {
       console.log(err);
