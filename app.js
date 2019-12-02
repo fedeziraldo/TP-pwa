@@ -12,6 +12,7 @@ var autenticationsRouter = require('./routes/autentication');
 var adminRouter = require('./routes/admin');
 var productosRouter = require('./routes/productos');
 var fileupload = require('./routes/fileupload');
+var estaticasRouter = require('./routes/estaticas');
 
 var app = express();
 
@@ -50,6 +51,7 @@ app.use('/autentication', autenticationsRouter);
 app.use('/admin', validateAdmin, adminRouter);
 app.use('/productos', productosRouter);
 app.use('/upload', validateAdmin, fileupload);
+app.use('/estaticas', estaticasRouter);
 
 function validateUsuario(req, res, next) {
   jwt.verify(req.headers['x-access-token'], req.app.get('secretKeyUsuarios'), function (err, decoded) {
