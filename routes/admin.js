@@ -16,6 +16,7 @@ router.post('/categorias', categorias.save);
 router.delete('/categorias/:id', categorias.eliminar);
 
 router.post('/productos', productos.save);
+router.post('/productos/desasociarImagen/:id', productos.desasociarImagen);
 router.delete('/productos/:id', productos.eliminar);
 
 router.get('/compras', compras.getAll);

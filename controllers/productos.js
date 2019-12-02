@@ -78,7 +78,7 @@ module.exports = {
         }
     },
 
-    asociarImagen: async function (prod_id, path) {
+    asociarImagen: async function (prod_id, path, next) {
         try {
             var data = await productosModel.findById(prod_id);
 
@@ -86,6 +86,20 @@ module.exports = {
             await data.save();
 
             return;
+        } catch (err) {
+            console.log(err);
+            next(err);
+        }
+    },
+
+    desasociarImagen: async function (req, res, next) {
+        try {
+            var data = await productosModel.findById(req.params.id);
+
+            data.imagenes.splice(req.body.path, 1);
+            await data.save();
+
+            res.json({ status: "success", data: data });
         } catch (err) {
             console.log(err);
             next(err);

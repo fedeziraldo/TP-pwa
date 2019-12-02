@@ -33,7 +33,7 @@ router.post('/:id', function(req, res, next) {
         var path = req.file.path;
         var prod_id = req.params.id;
         
-        productos.asociarImagen(prod_id, path);
+        productos.asociarImagen(prod_id, path, next);
         return res.send("Upload Completed for "+path); 
   });     
   
