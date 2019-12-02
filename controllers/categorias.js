@@ -1,4 +1,5 @@
 const categoriasModel = require("../models/categoriasModel");
+const productosModel = require("../models/productosModel").model;
 
 module.exports = {
   save: async function (req, res, next) {
@@ -35,6 +36,8 @@ module.exports = {
   eliminar: async function (req, res, next) {
     try {
       var data = await categoriasModel.findByIdAndUpdate(req.params.id, { $set: { fEliminado: new Date() } });
+      await categoriasModel.updateMany({fEliminado: null, padre: req.params.id}, {padre: data.padre})
+      await productosModel.updateMany({fEliminado: null, categoria: req.params.id}, {categoria: data.padre})
       res.json({ status: "success", data: data });
     } catch (err) {
       console.log(err);

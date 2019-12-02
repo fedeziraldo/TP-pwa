@@ -40,4 +40,6 @@ UsuariosSchemna.pre('save', function (next) {
     next();
 });
 
+UsuariosSchemna.plugin(mongoose.mongoosePaginate);
+
 module.exports = mongoose.model('users', UsuariosSchemna)

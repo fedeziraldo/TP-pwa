@@ -29,7 +29,7 @@ module.exports = {
 
     getDestacados: async function (req, res, next) {
         try {
-            var producto = await productosModel.paginate({ destacado: true, fEliminado : null }, { populate: 'categoria', limit: 16 });
+            var producto = await productosModel.paginate({ stock : { $gt: 0 }, destacado: true, fEliminado : null }, { populate: 'categoria', limit: 16 });
             res.status(200).json({ status: "success", message: "ok", data: producto });
         } catch (err) {
             console.log(err);

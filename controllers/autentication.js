@@ -33,7 +33,17 @@ module.exports = {
 
   getAll: async function (req, res, next) {
     try {
-      var data = await autenticationModel.find({fEliminado : null});
+      let query = {};
+      if (req.query.nombre) query.nombre = new RegExp(`\\w*${req.query.nombre}\\w*`);
+      query.fEliminado = null
+
+      let options = {
+        sort: {nombre :1},
+        limit: 99999999999,
+        page: req.query.page ? req.query.page : 1
+      };
+
+      var data = await autenticationModel.paginate(query, options);
       res.json({ status: "success", data: data });
     } catch (err) {
       console.log(err);
