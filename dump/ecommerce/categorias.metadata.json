@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"ecommerce.categorias"},{"v":2,"unique":true,"key":{"nombre":1},"name":"nombre_1","ns":"ecommerce.categorias","background":true}],"uuid":"64e131c42509406d9a3c4b705c118e0f"}
