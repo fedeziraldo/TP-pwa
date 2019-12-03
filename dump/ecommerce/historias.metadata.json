@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"ecommerce.historias"}],"uuid":"6054f1a46d0f41f59488759c07aea9eb"}
