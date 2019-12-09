@@ -53,7 +53,7 @@ module.exports = {
                 usuario: req.body.userId,
                 forma_pago: req.body.forma_pago,
                 cantidad: req.body.cantidad,
-                aPagar: req.body.cantidad * req.body.producto.precioOferta ? req.body.producto.precioOferta : req.body.producto.precio
+                aPagar: req.body.cantidad * (prod.precioOferta ? prod.precioOferta : prod.precio)
             });
             var result = await compra.save();
 
