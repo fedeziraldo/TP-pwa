@@ -1,4 +1,5 @@
 const comprasModel = require("../models/comprasModel");
+const productosModel = require("../models/productosModel").model;
 
 module.exports = {
     getAll: async function (req, res, next) {
@@ -39,7 +40,20 @@ module.exports = {
 
     save: async function (req, res, next) {
         try {
+            let prod = await productosModel.findById(req.body.producto._id);
+            if (prod == null || prod.stock < req.body.cantidad) {
+                res.status(500).json({ status: "error", message: "no hay stock del producto" });
+            } else {
+                prod.stock -= req.body.cantidad;
+                await prod.save()
+            }
+
             var compra = new comprasModel({
+                producto : req.body.producto,
+                usuario: req.body.userId,
+                forma_pago: req.body.forma_pago,
+                cantidad: req.body.cantidad,
+                aPagar: req.body.cantidad * req.body.producto.precioOferta ? req.body.producto.precioOferta : req.body.producto.precio
             });
             var result = await compra.save();
 

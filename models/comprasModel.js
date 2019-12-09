@@ -5,10 +5,11 @@ const productoSchema = require("./productosModel").schema;
 
 const ComprasSchema = Schema({
     producto: productoSchema,
-    usuario: { type: Schema.ObjectId, ref: "users" },
+    usuario: { type: Schema.ObjectId, ref: "users", required: true },
     fecha: {
         type: Date,
-        required: true
+        required: true,
+        default: new Date()
     },
     cantidad: {
         type: Number,
@@ -18,7 +19,14 @@ const ComprasSchema = Schema({
     {
         type: String,
         required: true
-    }
+    },
+    estadoPago:
+    {
+        type: String,
+        required: true,
+        default: "Pendiente"
+    },
+    aPagar: Number
 })
 
 ComprasSchema.plugin(mongoose.mongoosePaginate);
