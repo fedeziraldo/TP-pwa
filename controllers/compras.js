@@ -40,16 +40,16 @@ module.exports = {
 
     save: async function (req, res, next) {
         try {
-            let prod = await productosModel.findById(req.body.producto._id);
+            let prod = await productosModel.findById(req.body.producto);
             if (prod == null || prod.stock < req.body.cantidad) {
-                res.status(500).json({ status: "error", message: "no hay stock del producto" });
+                res.status(500).json({ status: "error", message: "no hay stock suficiente del producto" });
             } else {
                 prod.stock -= req.body.cantidad;
                 await prod.save()
             }
 
             var compra = new comprasModel({
-                producto : req.body.producto,
+                producto : prod,
                 usuario: req.body.userId,
                 forma_pago: req.body.forma_pago,
                 cantidad: req.body.cantidad,
