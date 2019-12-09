@@ -13,6 +13,11 @@ const ComprasSchema = Schema({
     cantidad: {
         type: Number,
         required: true
+    },
+    forma_pago:
+    {
+        type: String,
+        required: true
     }
 })
 
