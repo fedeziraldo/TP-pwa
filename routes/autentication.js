@@ -6,6 +6,6 @@ var autentication = require("../controllers/autentication");
 router.post('/registrarUsuario', autentication.saveUsuario);
 router.post('/loginUsuario', autentication.loginUsuario);
 router.post('/loginAdmin', autentication.loginAdmin);
-router.post('/activar/:id', autentication.activar);
+router.get('/activar/:id', autentication.activar);
 module.exports = router;
 

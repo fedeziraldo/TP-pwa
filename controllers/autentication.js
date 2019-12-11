@@ -1,6 +1,7 @@
 const autenticationModel = require("../models/autenticationModel");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+var transporter = require("../bin/email")
 
 autenticationModel.create({ nombre: "root", apellido: "root", password: "root", email: "root", admin: true, activo: true }, function (err) {
   if (err) {
@@ -14,6 +15,12 @@ module.exports = {
   saveUsuario: async function (req, res, next) {
     try {
       var data = await autenticationModel.create({ nombre: req.body.nombre, apellido: req.body.apellido, password: req.body.password, email: req.body.email });
+      let info = await transporter.sendMail({
+        from: process.env.EMAIL_USER, // sender address
+        to: req.body.email, // list of receivers
+        subject: 'Bienvenido <b>'+req.body.nombre + "</b> a Ecommerce CLIENTE", // Subject line
+        html: process.env.EMAIL_HTML + ` <a href="http://localhost:3000/autentication/activar/${data._id}">http://localhost:3000/autentication/activar/${data._id}</b>` // html body
+      });
       res.json({ status: "success", message: "User added successfully!!!", data: data });
     } catch (err) {
       console.log(err);
@@ -24,6 +31,12 @@ module.exports = {
   saveAdmin: async function (req, res, next) {
     try {
       var data = await autenticationModel.create({ nombre: req.body.nombre, apellido: req.body.apellido, password: req.body.password, email: req.body.email, admin: true });
+      let info = await transporter.sendMail({
+        from: process.env.EMAIL_USER, // sender address
+        to: req.body.email, // list of receivers
+        subject: 'Bienvenido <b>'+req.body.nombre + "</b> a Ecommerce ADMINISTRADOR", // Subject line
+        html: process.env.EMAIL_HTML + ` <a href="http://localhost:3000/autentication/activar/${data._id}">http://localhost:3000/autentication/activar/${data._id}</b>` // html body
+      });
       res.json({ status: "success", message: "Admin added successfully!!!", data: data });
     } catch (err) {
       console.log(err);
@@ -104,7 +117,7 @@ module.exports = {
   activar: async function (req, res, next) {
     try {
       var data = await autenticationModel.findByIdAndUpdate(req.params.id, { $set: { activo: true } });
-      res.json({ status: "success", data: data });
+      res.json({ status: "ha activado su cuenta", data: data });
     } catch (err) {
       console.log(err);
       next(err);
