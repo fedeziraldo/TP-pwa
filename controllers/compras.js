@@ -1,5 +1,6 @@
 const comprasModel = require("../models/comprasModel");
 const productosModel = require("../models/productosModel").model;
+const mp = require('../bin/mercdopago');
 
 module.exports = {
     getAll: async function (req, res, next) {
@@ -58,7 +59,39 @@ module.exports = {
             });
             var result = await compra.save();
 
+            var sale_id = result["_id"];
+
+            if (req.body.forma_pago == 'MP'){
+                let preference = {
+                    items: [
+                        {
+                            id: sale_id,
+                            title: 'Compra Nro. ' + sale_id,
+                            quantity: req.body.cantidad,
+                            currency_id: 'ARS',
+                            unit_price: result["aPagar"]
+                        }
+                    ],
+                    payer: {
+                        email: 'enzofab91@gmail.com' //ToDo: obtener email de usuario
+                    },
+                    notification_url: '' //ToDo: URL??
+                }
+
+                let dato_return = await mp.comprar(preference);
+                result = dato_return;
+            }
+            
+            //envia mail de orden de compra
+            let info = await transporter.sendMail({
+                from: process.env.EMAIL_USER, // sender address
+                to: req.body.email, // list of receivers
+                subject: 'Su compra <b>Nro '+ sale_id + "</b> se ha realizado correctamente", // Subject line
+                html: process.env.EMAIL_HTML_COMPRA + ` <br> ${result}` // html body
+            });
+
             res.status(200).json({ status: "success", message: "Compra added successfully!!!", data: result });
+
         } catch (err) {
             console.log(err);
             next(err);
