@@ -36,6 +36,7 @@ const UsuariosSchemna = Schema({
 })
 
 UsuariosSchemna.pre('save', function (next) {
+    console.log("entro pre save")
     this.password = bcrypt.hashSync(this.password, 10);
     next();
 });
